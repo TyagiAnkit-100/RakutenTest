@@ -1,44 +1,46 @@
 package com.example.github.repositories.view.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.example.github.repositories.viewModel.MainViewModel
+import android.widget.Toast
+import com.example.github.repositories.BR
 import com.example.github.repositories.R
+import com.example.github.repositories.base.BaseFragment
+import com.example.github.repositories.databinding.FragmentMainBinding
 import com.example.github.repositories.model.repo.RepositoryAdapter
+import com.example.github.repositories.viewModel.MainViewModel
 
-class MainFragment : Fragment() {
+class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
 
-    private val viewModel = MainViewModel()
-
-    private var swipeRefresh: SwipeRefreshLayout? = null
-    private var recyclerview: RecyclerView? = null
-
-    @SuppressLint("SetTextI18n")
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_main, container, false)
-        viewModel.searchRepositories()
-
-        swipeRefresh = view.findViewById(R.id.swipe_refresh)
-       // swipeRefresh!!.setOnRefreshListener { viewModel.refresh() }
-
-        recyclerview = view.findViewById(R.id.news_list)
-        recyclerview!!.layoutManager = LinearLayoutManager(context)
-
-        viewModel.repositories.observeForever {
-            val adapter = RepositoryAdapter(it.take(20).toMutableList(), requireActivity())
-            recyclerview!!.adapter = adapter
-        }
-        return view
+    override fun getLayout(): Int {
+        return R.layout.fragment_main
     }
+
+    override fun getBindingVariable(): Int {
+        return BR.viewModel
+    }
+
+    override fun getViewModelClass(): Class<MainViewModel> {
+        return MainViewModel::class.java
+    }
+
+    override fun onInternetUnavailable() {
+        Toast.makeText(requireContext(), "Network Disconnected!", Toast.LENGTH_LONG).show()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mViewModel?.searchRepositories()
+        subscribeObserver()
+    }
+
+    private fun subscribeObserver() {
+        mViewModel?.repositories?.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                val adapter = RepositoryAdapter(it.take(20).toMutableList(), requireActivity())
+                viewDataBinding?.rvGitRepo?.adapter = adapter
+            }
+        }
+    }
+
 }
