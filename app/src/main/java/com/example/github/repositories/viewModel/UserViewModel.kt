@@ -1,19 +1,21 @@
-package com.example.github.repositories
+package com.example.github.repositories.viewModel
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.github.repositories.data.GITHUB_URL
+import com.example.github.repositories.base.BaseViewModel
 import com.example.github.repositories.data.GitHubEndpoints
-import com.example.github.repositories.data.RepositoryDTO
-import com.example.github.repositories.data.UserDTO
-import kotlinx.coroutines.*
+import com.example.github.repositories.model.data.RepositoryDTO
+import com.example.github.repositories.model.data.UserDTO
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class UserViewModel : ViewModel() {
+class UserViewModel : BaseViewModel() {
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl(GITHUB_URL)
+        .baseUrl("https://api.github.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
     private val service: GitHubEndpoints = retrofit.create(GitHubEndpoints::class.java)

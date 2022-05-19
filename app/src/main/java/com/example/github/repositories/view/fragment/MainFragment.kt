@@ -1,4 +1,4 @@
-package com.example.github.repositories
+package com.example.github.repositories.view.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.github.repositories.viewModel.MainViewModel
+import com.example.github.repositories.R
+import com.example.github.repositories.model.repo.RepositoryAdapter
 
 class MainFragment : Fragment() {
 
@@ -24,10 +27,10 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_main, container, false)
-        viewModel.fetchItems()
+        viewModel.searchRepositories()
 
         swipeRefresh = view.findViewById(R.id.swipe_refresh)
-        swipeRefresh!!.setOnRefreshListener { viewModel.refresh() }
+       // swipeRefresh!!.setOnRefreshListener { viewModel.refresh() }
 
         recyclerview = view.findViewById(R.id.news_list)
         recyclerview!!.layoutManager = LinearLayoutManager(context)

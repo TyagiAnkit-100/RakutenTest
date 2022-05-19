@@ -1,5 +1,7 @@
 package com.example.github.repositories.data
 
+import com.example.github.repositories.model.data.RepositoryDTO
+
 class LocalDataStore private constructor() {
 
     companion object {

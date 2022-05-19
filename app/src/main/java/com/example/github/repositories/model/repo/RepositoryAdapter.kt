@@ -1,4 +1,4 @@
-package com.example.github.repositories
+package com.example.github.repositories.model.repo
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -8,8 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.github.repositories.R
 import com.example.github.repositories.data.LocalDataStore
-import com.example.github.repositories.data.RepositoryDTO
+import com.example.github.repositories.model.data.RepositoryDTO
+import com.example.github.repositories.view.fragment.DetailFragment
 
 class RepositoryAdapter(
     val list: List<RepositoryDTO>,

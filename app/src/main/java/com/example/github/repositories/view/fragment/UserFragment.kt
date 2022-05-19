@@ -1,4 +1,4 @@
-package com.example.github.repositories
+package com.example.github.repositories.view.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -10,7 +10,10 @@ import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.example.github.repositories.data.OwnerDTO
+import com.example.github.repositories.R
+import com.example.github.repositories.model.repo.RepositoryAdapter
+import com.example.github.repositories.viewModel.UserViewModel
+import com.example.github.repositories.model.data.OwnerDTO
 import com.squareup.picasso.Picasso
 
 class UserFragment(private val user: OwnerDTO) : Fragment() {

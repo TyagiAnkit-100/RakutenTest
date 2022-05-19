@@ -1,5 +1,8 @@
 package com.example.github.repositories.data
 
+import com.example.github.repositories.model.data.RepositoryDTO
+import com.example.github.repositories.model.data.Response
+import com.example.github.repositories.model.data.UserDTO
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -7,12 +10,6 @@ import retrofit2.http.Query
 import retrofit2.http.Url
 
 interface GitHubEndpoints {
-    @GET("search/repositories")
-    fun searchRepositories(
-        @Query("q") q: String,
-        @Query("sort") sort: String,
-        @Query("order") order: String
-    ): Call<Response>
 
     @GET("users/{username}")
     fun getUser(
