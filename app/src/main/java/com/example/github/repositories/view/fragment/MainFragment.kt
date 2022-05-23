@@ -31,6 +31,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewModel?.searchRepositories()
+        viewDataBinding?.shimmerViewContainer?.startShimmerAnimation()
         subscribeObserver()
     }
 
@@ -39,8 +40,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
             if (it.isNotEmpty()) {
                 val adapter = RepositoryAdapter(it.take(20).toMutableList(), requireActivity())
                 viewDataBinding?.rvGitRepo?.adapter = adapter
+                viewDataBinding?.shimmerViewContainer?.stopShimmerAnimation()
             }
         }
     }
-
 }

@@ -6,8 +6,8 @@ import com.example.github.repositories.model.api.ApiService
 import com.example.github.repositories.model.repo.GitHubUserRepository
 
 open class BaseViewModel : ViewModel() {
-    protected var showLoading: ObservableField<Boolean> = ObservableField(false)
-    protected var api: ApiService? = null
+    var showLoading: ObservableField<Boolean> = ObservableField(false)
+    private var api: ApiService? = null
 
     init {
         val nc = NetworkCommunicator.instance
