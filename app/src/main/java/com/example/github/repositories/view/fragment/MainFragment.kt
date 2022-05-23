@@ -10,7 +10,8 @@ import com.example.github.repositories.databinding.FragmentMainBinding
 import com.example.github.repositories.model.repo.RepositoryAdapter
 import com.example.github.repositories.viewModel.MainViewModel
 
-class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
+class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(),
+    RetryFragment.RetryClickListener {
 
     override fun getLayout(): Int {
         return R.layout.fragment_main
@@ -25,13 +26,16 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
     }
 
     override fun onInternetUnavailable() {
-        Toast.makeText(requireContext(), "Network Disconnected!", Toast.LENGTH_LONG).show()
+        requireActivity().supportFragmentManager
+            .beginTransaction()
+            .add(android.R.id.content, RetryFragment(this))
+            .addToBackStack("retry")
+            .commit()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mViewModel?.searchRepositories()
-        viewDataBinding?.shimmerViewContainer?.startShimmerAnimation()
+        fetchRepositories()
         subscribeObserver()
     }
 
@@ -43,5 +47,14 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
                 viewDataBinding?.shimmerViewContainer?.stopShimmerAnimation()
             }
         }
+    }
+
+    private fun fetchRepositories() {
+        mViewModel?.searchRepositories()
+        viewDataBinding?.shimmerViewContainer?.startShimmerAnimation()
+    }
+
+    override fun onRetryClick() {
+        fetchRepositories()
     }
 }
