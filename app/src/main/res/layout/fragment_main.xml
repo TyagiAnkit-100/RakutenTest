@@ -21,7 +21,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:visibility="@{viewModel.showLoading ? View.VISIBLE : View.GONE}"
-            shimmer:duration="400">
+            shimmer:duration="600">
 
             <!-- Adding 5 rows of placeholders -->
             <LinearLayout

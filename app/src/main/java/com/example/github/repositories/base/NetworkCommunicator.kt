@@ -19,6 +19,7 @@ import javax.net.ssl.SSLSocketFactory
 import javax.net.ssl.X509TrustManager
 import javax.security.cert.CertificateException
 
+
 private const val CONTENT_TYPE = "Content-Type"
 private const val APPLICATION_JSON = "application/json"
 private const val SSL = "SSL"
@@ -38,7 +39,6 @@ class NetworkCommunicator {
 
     init {
         if (BuildConfig.DEBUG) {
-
             val headerInterceptor = Interceptor { chain ->
                 val newRequest = chain.request().newBuilder()
                     .addHeader(CONTENT_TYPE, APPLICATION_JSON)

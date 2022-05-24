@@ -1,8 +1,10 @@
 package com.example.github.repositories.viewModel
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.github.repositories.base.BaseViewModel
 import com.example.github.repositories.model.data.RepositoryDTO
+import kotlinx.coroutines.launch
 
 class MainViewModel : BaseViewModel() {
 
@@ -10,17 +12,14 @@ class MainViewModel : BaseViewModel() {
 
     fun searchRepositories() {
         showLoading.set(true)
-        repository?.searchRepositories({
-            showLoading.set(false)
-            repositories.postValue(it.items)
-        }, {
-            showLoading.set(false)
-            repositories.postValue(ArrayList())
-        })
-    }
-
-    override fun onCleared() {
-        repository?.cancel()
-        super.onCleared()
+        viewModelScope.launch {
+            repository?.searchRepositories({
+                showLoading.set(false)
+                repositories.postValue(it.items)
+            }, {
+                showLoading.set(false)
+                repositories.postValue(ArrayList())
+            })
+        }
     }
 }
